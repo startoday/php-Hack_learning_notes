@@ -52,3 +52,49 @@
   echo isset($za['name']) ?  "name is set\n" : "name is not set\n";
   echo $za['name'] ?? "name is not set\n";  // in php 7
   ```
+   sort($za) throw the keys! //worst!!  use ksort and asort
+   
+   slipt strings into array  $tmp = explode(' ', $inp);
+   
+
+5. functions
+     ```
+     function greet($name = "es"){ //default value
+          print "Hello \n"
+          return "done"
+     }
+     greet();
+     greet("fr");
+     ```
+     
+   the paramters are passed by value(copy) with $
+   can all by ref with an "&" before $name =>  function greet(&$name)
+
+
+
+5. global variable (key word global)
+     $GET, $POST etc are super globals 
+     ```
+          function dozap(){
+               global $val;
+               $val = 100;
+          }
+          $val = 10;  // name needs to be the same 
+          dozap();
+          echo "DoZap = $val\n";  // 100 
+      ```
+  
+6.  there is a function called "function_exists("function name") will check if a function exist (due to different versions, some function  may not exist)
+    bool array_key_exists()
+
+7.  ```
+          <?php
+               phpinfo(); //shows internal configuration
+          ?>
+    ```
+          
+8. Modularity  
+     include "header.php" 
+     include_once "header.php" 
+     require "header.php"  - pull in the file here and die if it is missing 
+     require_once "header.php"  - pull the file unless it ready there, die if it is missing
