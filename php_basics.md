@@ -36,3 +36,6 @@
     }  else {
     }
 
+8. for loop   
+    for($count=1; $count<=6;$count++){
+        }
