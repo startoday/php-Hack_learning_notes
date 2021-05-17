@@ -39,3 +39,4 @@
 8. for loop   
     for($count=1; $count<=6;$count++){
         }
+9. variables in PHP are case sensitive but functions are not
