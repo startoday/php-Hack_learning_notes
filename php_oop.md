@@ -29,3 +29,5 @@ print $chuck->get_name() . "\n"
 4. inheritance: keyword "extends"
     - public; protected(accessed inside the class and derived classes); private (not visible in derived class)   
     
+5. PDO : Portable Data Objects, an library for database 
+
