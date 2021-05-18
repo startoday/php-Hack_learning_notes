@@ -45,7 +45,22 @@ SELECT COUNT( * ) FROM Users WHERE email='ted@umich.edu' ;   // giving you a col
   - Foreign Key : generally an integer key pointing to a row in another table (eg: artist_id)
 
   Best practice:
-  Never use your logical key(string) as the primary key(number)! // even your logical key is unique! it can change, also will be slow, less efficient for relationships
+  
+  Never use your logical key(string) as the primary key(number)! // even your logical key is unique! it can change, also will be slow, less efficient for relationships; eg if you use email as your pk, when you change, so many table will be changed, usually we just store it into one table! again, 3NF!
+  
+  When all pks are ints then all fks are ints, this is VERY GOOD!
   
   
-6.  
+
+6. use Constraint foreign key (artist_id) references Album (album_id) on delete cascade on update cascade
+
+7. The JOIN operation links across several tables as part of a SELECT operation. Use Join with ON to make connection between the tables  // just like a "when"
+    joining two tables without an ON clause gives all possible combinations of rows 
+
+  ```
+  SELECT Album.title, Artist.name FROM Album JOIN Artisit ON Album.artist_id = Artist.artist_id  //select is tmp, it does not store anything for real
+  SELECT Album.title, Artist.name FROM Album JOIN Artisit JOIN C ON Album.artist_id = Artist.artist_id and C.id = Artist.artist_id
+  ```
+  
+  
+ 8. on delete cascase: what if the depended changed, follow it -> clean up broken references; you can also choose other stuff like set null, restrict ...etc. 
