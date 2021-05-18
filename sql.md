@@ -14,7 +14,7 @@ SELECT COUNT( * ) FROM Users WHERE email='ted@umich.edu' ;   // giving you a col
 2. data type: 
 
 - string fields: 
-         char (allocates the entire space - faster for small strings where length is known) vs varchar (usually used for 5-20 chars; allocates a variable amount of space depending on the data length - less space)
+         char (allocates the entire space - faster for small strings where length is known/fixed) vs varchar (usually used for 5-20 chars; allocates a variable amount of space depending on the data length - less space)
 - text fields: generally not used with indexing or sorting 
 - binary fields(BYTE, VARBINARY): not indexed or sorted
 - binary large oject(BLOB): files, images, word, pdf, movies... large raw files; no translation, indexing or char set
