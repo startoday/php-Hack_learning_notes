@@ -34,5 +34,18 @@ SELECT COUNT( * ) FROM Users WHERE email='ted@umich.edu' ;   // giving you a col
                 ```
                 
 
-4.      
+4. Database Normalization(3NF)
+  - Do not replicate data. Instead reference data
+  - Use integers for keys 
+  - add a special "key" column to each table, which you will make reference to
+         
+5. Keys
+  - Primary Key : Generally an integer auto-increment field (album_id)
+  - Logical Key : what the outside world uses for lookup(eg: a column called title) (usually a string)
+  - Foreign Key : generally an integer key pointing to a row in another table (eg: artist_id)
 
+  Best practice:
+  Never use your logical key(string) as the primary key(number)! // even your logical key is unique! it can change, also will be slow, less efficient for relationships
+  
+  
+6.  
