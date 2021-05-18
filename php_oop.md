@@ -21,6 +21,11 @@ print $chuck->get_name() . "\n"
 
 ```
 
-3.  Access "static item" in a class ( :: )   : echo DataTime::RFC822."\n"
-    Access item in an object ( -> )          : echo  $z->format('Y-m-d')."\n"
+3.  Access "static item" in a class ( :: )   : echo DataTime::RFC822."\n"        // eg, constants in class. static methods 
+  
+    Access item in an object ( -> )          : echo  $z->format('Y-m-d')."\n"   //dynamic
+    
+    
+4. inheritance: keyword "extends"
+    - public; protected(accessed inside the class and derived classes); private (not visible in derived class)   
     
