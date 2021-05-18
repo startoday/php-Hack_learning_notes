@@ -63,4 +63,12 @@ SELECT COUNT( * ) FROM Users WHERE email='ted@umich.edu' ;   // giving you a col
   ```
   
   
- 8. on delete cascase: what if the depended changed, follow it -> clean up broken references; you can also choose other stuff like set null, restrict ...etc. 
+8. on delete cascase: what if the depended changed, follow it -> clean up broken references; you can also choose other stuff like set null, restrict ...etc. 
+
+9. Many to many relation: break into one to many tables with a connection(junction) table with two or more foreign keys
+    
+    Primay key (account_id, course_id) // combination is unique
+
+
+
+
