@@ -70,5 +70,8 @@ SELECT COUNT( * ) FROM Users WHERE email='ted@umich.edu' ;   // giving you a col
     Primay key (account_id, course_id) // combination is unique
 
 
+10. GRANT ALL ON misc.* TO 'fred'@'localhost' IDENTIFIED BY 'zap';   //zap is the password, localhost place is the connection
 
+
+ 
 
