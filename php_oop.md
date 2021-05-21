@@ -57,7 +57,8 @@ in most server applications, as soon as we meet a new unmarked browser, we creat
 
 session start/ session destory
 
-session is not cookie
+session is not cookie， usually the id will be stored in the cookie, if you destory the session, if it is in the same browser/webpage, the id won't change but the session will be empty
+
 
 
 
