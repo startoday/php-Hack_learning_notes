@@ -24,6 +24,15 @@ print $chuck->get_name() . "\n"
 3.  Access "static item" in a class ( :: )   : echo DataTime::RFC822."\n"        // eg, constants in class. static methods 
   
     Access item in an object ( -> )          : echo  $z->format('Y-m-d')."\n"   //dynamic
+     
+    **=>和->** 
+    
+        =>数组成员访问符号，->对象成员访问符号；
+        $this->$name=$value：将当前类的name变量的值设为$value;
+        $this代表了类本身，->是访问其类成员的操作符
+        双冒号运算符（::）类名::静态属性/方法
+        “::”用来调用类中静态的属性和方法
+    
     
     
 4. inheritance: keyword "extends"
@@ -60,5 +69,108 @@ session start/ session destory
 session is not cookie， usually the id will be stored in the cookie, if you destory the session, if it is in the same browser/webpage, the id won't change but the session will be empty
 
 
+9. Example Code of Class:
+```
+<?php
+//类的定义以关键字class开始，类的命名通常以每个单词第一个字母大写
+    class NbaPlayer{
+        public $name = "Jordan"; //定义属性
+        public $height = "198cm";
+        public $team = "Bull";
+        public $playerNumber = "23";
+        
+    //定义方法
+    public function run(){
+        echo "Running\n";
+    }
+    public function dribblr(){
+        echo "Dribbling\n";
+    }
+    public function pass(){
+        echo "Passing\n";
+    }
+}
+    //类到对象的实例化
+    //类的实例化为对象时使用关键字new，new之后紧跟类的名称和一对括号
+    $jordan = new NbaPlayer();  
+    
+    //对象中的属性成员可以通过"->"符号来访问
+    echo $jordan->name."\n";
+    
+    //对象中的成员方法可以通过"->"符号来访问
+    $jordan->dribble();
+    $jordan->run();
+?>
+
+//example of consts and static stuff in class
+
+<?php
+    class Computer{
+        const PI = 3.14159;
+    }
+echo Computer::PI;
+?>
+
+```
+
+
+10. Constructor and destructor 
+```
+<?php
+//类的定义以关键字class开始，类的命名通常以每个单词第一个字母大写
+    class NbaPlayer{
+        public $name = "Jordan"; //定义属性
+        public $height = "198cm";
+        public $team = "Bull";
+        public $playerNumber = "23";
+        
+        //构造函数，在对象被实例化的时候自动调用
+        function __construct($name,$height,$weight,$team){
+            echo "It is an  NbaPlayer constructor\n";
+            $this->name = $name;
+            //$this是PHP里面的伪变量，表示对象自身。可以通过$this->的方式访问对象的属性和方法
+            $this->height = $height;
+            $this->weight = $weight;
+            $this->team = $team;
+        }
+        
+        //析构函数，在程序执行结束的时候会自动调用
+        //析构函数通常被用于清理程序使用的资源。比如程序使用了打印机，那么可以再析构函数里面释放打印机资源
+        function __destruct(){
+            echo "Destroying".$this->name."\n";
+        }
+        
+        //定义方法
+    public function run(){
+        echo "Running\n";
+    }
+    public function dribblr(){
+        echo "Dribbling\n";
+    }
+    public function pass(){
+        echo "Passing\n";
+    }
+}
+    //类到对象的实例化
+    //类的实例化为对象时使用关键字new，new之后紧跟类的名称和一对括号
+    $jordan = new NbaPlayer("Jordan","198cm","98kg","Bull");    
+    
+    //对象中的属性成员可以通过"->"符号来访问
+    echo $jordan->name."\n";
+    
+    //对象中的成员方法可以通过"->"符号来访问
+    $jordan->dribble();
+    $jordan->run();
+    
+    //每一次用new实例化对象的时候，都会用类名后面的参数列表调用构造函数
+    $james = new NbaPlayer("James","203cm","120kg","Heat")
+    echo $james->name."\n";
+    
+    //通过把变量设为null，可以触发析构函数的调用
+    //当对象不再使用的时候会触发析构函数
+    $james = null;
+    echo "from now on James will not be used.\n"
+?>
+```
 
 
