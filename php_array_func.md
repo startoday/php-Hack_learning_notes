@@ -31,6 +31,20 @@
         echo "Key = ", $k, " Val=", $v, "/n";
       }
     ?>
+    
+    
+     <?php
+          $actors [0] ="Marry";
+          $actors [1] ="Lorry";
+          $actors [2] = "mike";
+
+          foreach ($actors as $values){
+               echo "Name:$values<br>"; 
+          }
+     ?>
+ 
+    
+    ```
  3. you can also have arrays of arrays
 
     ``` 
@@ -98,3 +112,25 @@
      include_once "header.php" 
      require "header.php"  - pull in the file here and die if it is missing 
      require_once "header.php"  - pull the file unless it ready there, die if it is missing
+     
+     
+9. strlen() for calculating the len of a string
+10. strpos() for searching a string or a char inside of a string     
+11. example of define
+     ```
+     <?php
+     define("poems", "Homeric epic");
+     echo poems; // "Homeric epic"
+     echo "a= ".$a."<br>";  // br:换行符
+     ?>
+     ```
+     
+12. I will say it again, php中方法不区分大小写
+     ```
+     require(dirname(__FILE__).'/global.php'); //引入全局文件
+     require(dirname(__FILE__).'/config.ini.php'); //引入基本配置文件
+     ```
+     
+     
+     
+    
