@@ -5,7 +5,13 @@
     - single quotes will not expand $variable as well  
 3. for comments: can use // , /* */, #
 4. echo can do similar thing like print, but it can take multiple parameters without parentheses eg : echo $x, "\n"
-5. - more agressive implicit type conversion
+   difference between echo and print:
+   - echo can print one or more strings
+   - print can only print simple types such as int and string
+   - print_ r can print more complicated types: array and object
+   - var_dump can print both the type and value, so it is easy to read than simple print(remember the "NULL")
+
+5. more agressive implicit type conversion
         eg : $x = "15" + 7  // => 22 
    - equality (  ==   != ) do the type conversion   eg : false == 0
    - identity ( ===   !==) no type conversion eg: false !== 0
@@ -39,4 +45,35 @@
 8. for loop   
     for($count=1; $count<=6;$count++){
         }
-9. variables in PHP are case sensitive but functions are not
+9. variables in PHP are case sensitive but functions are not; 
+    
+    for boolean type, TRUE and FALSE, these two are not case sensitive
+   
+   there are three scopes of variables: local, global, and, static
+   
+   eg 
+   ```
+       <? php
+       function myTest(){
+            static $x=-1;
+            echo $x;
+            $x--;
+       }
+
+       myTest();   // -1
+       echo "<br>"
+       myTest();  //-2
+       echo "<br>"
+       myTest();   //-3
+       echo "<br>"
+       ?>
+   ```
+
+10. types 
+```
+<?php
+
+    var_dump((int)(26/3));     //int(8)  can use int to cast the type
+
+?>
+```
