@@ -173,5 +173,76 @@ echo Computer::PI;
 ?>
 ```
 
-11. 
 
+11. extend, you can only extend from one parent
+
+```
+<?php
+
+class foo
+{
+    public function printItem($string) 
+    {
+        echo 'Foo: ' . $string . PHP_EOL;
+    }
+
+    public function printPHP()
+    {
+        echo 'PHP is great.' . PHP_EOL;
+    }
+}
+
+class bar extends foo
+{
+    public function printItem($string)
+    {
+        echo 'Bar: ' . $string . PHP_EOL;
+    }
+}
+
+$foo = new foo();
+$bar = new bar();
+$foo->printItem('baz'); // Output: 'Foo: baz'
+$foo->printPHP();       // Output: 'PHP is great' 
+$bar->printItem('baz'); // Output: 'Bar: baz'
+$bar->printPHP();       // Output: 'PHP is great'
+
+?>
+
+```
+
+12. example of how to write a static function in class 
+```
+class NbaPlayer
+{
+    // 类的属性的定义
+    public $team="Bull";
+    public $playerNumber="23";
+
+    private $age="40";  
+
+    public static $president="David Stern";
+
+    public static function changePresident($newPrsdt){
+        static::$president = $newPrsdt; // self用于表示当前类，"::"操作符用于访问类的静态成员
+        // static关键字也可以用于访问当前类的静态成员
+        // echo $this->age . "\n"; // 不能在静态方法中使用this伪变量，也不能用对象的->方式调用静态成员
+
+    }
+}   
+
+// 类名加“::”可以访问类的静态成员
+// 静态成员不需要实例化就可以访问
+echo "The president is ". NbaPlayer::$president. "\n";//The president is David Stern 
+
+NbaPlayer::changePresident("Adam Silver");
+
+echo "The president is changed to ". NbaPlayer::$president. "\n";//The president is changed to Adam Silver
+
+?>
+```
+
+13. "Final" a final class can't be extend and a final function in parent class can't be override
+
+
+14. implments interface: the methods needs to be defined if it inherit any interface and one 
