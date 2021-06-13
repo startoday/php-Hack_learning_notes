@@ -42,3 +42,19 @@ Note that due to underflow, negating the smallest negative value produces the sa
 \INF . "2e+5"            // string result with value "INF2e+5"
 true . null              // string result with value "1"
 ```
+
+3. comparsion 
+
+comparisons also work on strings. This uses a lexicographic ordering unless both strings are numeric, in which case the numeric values are used:
+```
+"a" < "b"   // true
+"ab" < "b"  // true
+
+"01" < "1"  // false (1 == 1)
+```
+Arrays are compared by length, then by lexicographic ordering on elements:
+```
+varray[5] < varray[1, 2]   // true (LHS has fewer elements)
+
+varray[0, 2] < varray[1,2] // true (0 < 1)
+```
