@@ -97,3 +97,24 @@ When importing many member names from a given namespace, we can use a group form
 ```
 use NS1\{C, I, T};
 ```
+
+7. list() is a special syntac for unpacking tuples. 
+
+```
+$tuple = tuple('top level', tuple('inner', 'nested'));
+list($top_level, list($inner, $nested)) = $tuple;
+echo "top level -> {$top_level}, inner -> {$inner}, nested -> {$nested}\n";
+
+```
+
+You can use the special $_ variable to ignore certain elements of the tuple. You can use $_ multiple times in one assignment and have the types be different. You MUST use $_ if you want to ignore the elements at the end. You are not allowed to use a list() with fewer elements than the length of the tuple.
+
+
+8. example of "[ ]"
+```
+//For a vec, the brackets can be empty, provided the subscript expression is the destination of an assignment. This results in a new element being inserted at //the right-hand end. The type and value of the result is the type and value of the new element. For example:
+
+$v = vec[10, 25, -6];
+$v[] = 99;    // creates new element with key 3, value 99
+```
+
