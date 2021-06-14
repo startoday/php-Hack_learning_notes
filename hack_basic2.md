@@ -58,3 +58,15 @@ varray[5] < varray[1, 2]   // true (LHS has fewer elements)
 
 varray[0, 2] < varray[1,2] // true (0 < 1)
 ```
+
+
+4. The ??= operator can be used for conditionally writing to a variable if it is null, or to a collection if the specified key is not present or has null value.
+The ?? operator is similar to the built-in function idx(). However, an important difference is that idx() only falls back to the specified default value if the given key does not exist, while ?? uses the fallback value even if a key exists but has null value.
+
+
+5. assign operator (=)
+```
+$s = "ab";
+$s[0] = "x"; // in bounds
+$s[3] = "y"; // $s is now "xb y"
+```
