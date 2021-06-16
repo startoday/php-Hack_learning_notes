@@ -214,3 +214,57 @@ function use_it(): void {
 
 ```
  
+10. function reference
+- to refer to a top-level(global) function named foo, you can do  foo<>; // a reference to global function 'foo'
+- equal says:
+    ```
+    $fun = \Foo\Bar\Baz\derp<>;
+    namespace Foo;
+    $fun = Bar\Baz\derp<>;
+    use namespace Foo\Bar\Baz;
+    $fun = Baz\derp<>;
+    use function Foo\Bar\Baz\derp;
+    $fun = derp<>;
+    ```
+- refer a static method :  MyClass::bar<>; // a reference to static method 'MyClass::bar';  
+    - Abstract static methods cannot be referenced. Such methods cannot be called, for they have no implementation. Invoking a hypothetical reference to one would also be an error, so we simply don’t allow a reference to be created.    
+    - In traits and other classes that are not marked final, you cannot use self:: in a reference. This is to avoid ambiguity and confusion around what self actually refers to when the method is called 
+    - parent:: is never supported
+
+- If you wish to pass along explicit generic arguments, either as a hint to the type checker, or in the case of a function with reified type parameters when they are required; it must be porvied at where the function ref is created
+    - The special wildcard specifier _ may be provided in place of any or all erased (non-reified) generic arguments if you want Hack to infer a type automatically based on the type parameter’s constraints. 
+```
+i_am_erased<int, _>; // erased generics (note wildcard)
+
+$x = fizz<int, string>; // OK
+$x(4, 'hello');
+$x(-1, false); // error!
+
+$y = fizz<>;
+$y(3.14, new C()); // also OK
+$y('yo', derp()); // error!
+
+// OK as well
+$z = fizz<int, _>;
+$z = fizz<_, string>;
+$z = fizz<_, _>;
+
+// these all have errors!
+fizz<_>;
+fizz<string, _>;
+fizz<string, int>;
+    
+    
+i_am_reified<C<string>>; // a reified generic    
+function buzz<reify T as arraykey>(T $x): mixed { ... }
+
+$w = buzz<int>; // OK
+$w(42);
+$w("goodbye"); // error!
+
+// these all have errors!
+buzz<>;
+buzz<_>;
+buzz<mixed>;
+
+```
