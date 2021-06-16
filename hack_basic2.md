@@ -70,3 +70,147 @@ $s = "ab";
 $s[0] = "x"; // in bounds
 $s[3] = "y"; // $s is now "xb y"
 ```
+
+
+6.function can take default parameters, Required parameters must come before optional parameters!
+
+You can use ... to define a function that takes a variable number of arguments.
+```
+function add_value(int $x, int $y = 1): int {
+  return $x + $y;
+}
+
+function sum_ints(int $val, int ...$vals): int {
+  $result = $val;
+  
+  foreach ($vals as $v) {
+    $result += $v;
+  }
+  return $result;
+}
+
+```
+
+Functions are values in Hack, so they can be passed as arguments too. 
+```
+function apply_func(int $v, (function(int): int) $f): int {
+  return $f($v);
+}
+
+function usage_example(): void {
+  $x = apply_func(0, $x ==> $x + 1);
+}
+
+
+function takes_variadic_fun((function(int...): void) $f): void {
+  $f(1, 2, 3);
+
+  $args = vec[1, 2, 3];
+  $f(0, ...$args);
+}
+```
+
+If a type is wrong, HHVM will raise a fatal error. This is controlled with the HHVM option CheckReturnTypeHints. Setting it to 0 or 1 will disable this.
+
+7. annoynomous function ( pass by value not by reference. This is also true for any object property passed to an anonymous function.)   defines by ==>
+```
+$f = $x ==> $x + 1;
+$f2 = $x ==> { return $x + 1; };
+$two = $f(1); // result of 2
+
+$x = 5;
+$f = $x ==> $x + 1;
+
+$six = $f($x); // pass by value
+
+echo($six); // result of 6
+echo("\n");
+echo($x); // $x is unchanged; result of 5
+
+//If you need to mutate the reference, use the HSL Ref class.
+```
+
+8. format strings
+The Hack typechecker can also check that format strings are being used correctly.
+
+This requires that the format string argument is a string literal.
+
+```
+// Correct.
+Str\format("First: %d, second: %s", 1, "foo");
+
+// Typechecker error: Too few arguments for format string.
+Str\format("First: %d, second: %s", 1);
+
+$s = "Number is: %d";
+
+// Typechecker error: Only string literals are allowed here.
+Str\format($s, 1);
+```
+
+You can define your own functions with format string arguments too.
+
+```
+function takes_format_string(
+  \HH\FormatString<\PlainSprintf> $format,
+  mixed ...$args
+): void {}
+
+function use_it(): void {
+  takes_format_string("First: %d, second: %s", 1, "foo");
+}
+//HH\FormatString<PlainSprintf> will check that you've used the right number of arguments. HH\FormatString<Str\SprintfFormat> will also check that arguments match the type in the format string.
+```
+
+9.inout parameters 
+
+**inout** provides "copy-in, copy-out" arguments, which allow you to modify the variable in the caller.
+
+**inout** must be written in both the function signature and the function call. This is enforced in the typechecker and at runtime.
+
+dynamic calls can't be used for inout eg: you cannot use meth_caller, call_user_func or ReflectionFunction::invoke.
+
+ ```
+ function takes_inout(inout int $x): void {
+  $x = 1;
+}
+
+function call_it(): void {
+  $num = 0;
+  takes_inout(inout $num);
+
+  // $num is now 1.
+}
+
+//This is similar to copy-by-reference, but the copy-out only happens when the function returns. If the function throws an exception, no changes occur.
+
+function takes_inout(inout int $x): void {
+  $x = 1;
+  throw new Exception();
+}
+
+<<__EntryPoint>>
+function call_it(): void {
+  $num = 0;
+  try {
+    takes_inout(inout $num);
+  } catch (Exception $_) {
+  }
+
+  // $num is still 0.
+}
+
+function set_to_value(inout int $item, int $value): void {
+  $item = $value;
+}
+
+function use_it(): void {
+  $items = vec[10, 11, 12];
+  $index = 1;
+  set_to_value(inout $items[$index], 42);
+
+  // $items is now vec[10, 42, 12].
+}
+
+```
+ 
