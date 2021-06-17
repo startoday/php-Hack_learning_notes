@@ -63,3 +63,7 @@ class FunctionBox {
 $b = new FunctionBox(() ==> { echo "hello"; });
 ($b->value)(); //Use parentheses to access and call the wrapped function.
 ```
+
+3. If a method is intended to override a method in a parent class, you should annotate it with <<_ _ Override>>. This has no runtime effect, but ensures you get a type error if the parent method is removed.  Hack does not support method overloading. Subclasses methods must have a return type, parameters and visibility that is compatible with the parent class.
+
+
