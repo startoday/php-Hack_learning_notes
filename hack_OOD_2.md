@@ -113,4 +113,10 @@ function main() : void {
 }
 ```
 
-
+3. traits and interface requirements
+- To introduce a trait requirement:   require extends <class name>;   or  require implements <interface name>;
+- To introduce an interface requirement: require extends <class name>;
+- *require extends* should be taken literally. The class must extend the required class; thus the actual required class does not meet that requirement. This is to avoid some subtle circular dependencies when checking requirements.
+  
+  
+  
