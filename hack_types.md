@@ -87,4 +87,9 @@ function is_leap_year(int $yy): bool {   // As we can see, $v is implicitly type
 - Types must be declared for properties and for the parameters and the return type of named functions.
 - Types can be declared or inferred for constants and for the parameters and return type of unnamed functions.
 
+9. The integer type int is signed and uses twos-complement representation for negative values. At least 64 bits are used, so the range of values that can be stored is at least [-9223372036854775808, 9223372036854775807].
 
+Namespace HH\Lib\Math contains the following integer-related constants: INT64_MAX, INT64_MIN, INT32_MAX, INT32_MIN, INT16_MAX, INT16_MIN, and UINT32_MAX.
+
+
+10. The floating-point type, float, allows the use of real numbers. Using predefined constant names, those values are written as -INF, INF, and NAN (Not-a-Number (NaN)), respectively.
