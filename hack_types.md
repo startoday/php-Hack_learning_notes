@@ -33,3 +33,18 @@ class C {
   ...
 }
 ```
+
+6. if T2 is a subtype of T1, program elements designed to operate on T1 can also operate on T2.
+- The root of the type hierarchy is the type mixed; as such, every type is a subtype of that type. Any type is a subtype of itself.
+- int and float are subtypes of num. int and string are subtypes of arraykey.
+- For each type T, T  and null is a subtype of the nullable type ?T.
+- string is a subtype of Stringish.
+- The predefined types vec, dict, and keyset are subtypes of Container, KeyedContainer, KeyedTraversable, and Traversable.
+- If A is an alias for a type T created using type, then A is a subtype of T, and T is a subtype of A.
+- If A is an alias for a type T created using newtype, inside the file containing the newtype definition, A is a subtype of T, and T is a subtype of A. Outside that file, A and T have no relationship, except that given newtype A as C = T, outside the file with the newtype definition, A is a subtype of C.
+- A class type is a subtype of all its direct and indirect base-class types. A class type is a subtype of all the interfaces it and its direct and indirect base-class types implement. An interface type is a subtype of all its direct and indirect base interfaces.
+- A shape type S2 whose field set is a superset of that in shape type S1, is a subtype of S1
+- Although noreturn is not a type, per se, it is regarded as a subtype of all other types, and a supertype of none.
+
+
+
