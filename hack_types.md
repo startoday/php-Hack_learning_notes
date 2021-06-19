@@ -24,4 +24,12 @@ function definitely_int(int $x): int {
 
 5. A type alias can be created in two ways: using *type* and *newtype*.
    -  An alias created using *type* is a transparent type alias. For a given type, that type and all transparent aliases to that type are all the same type and can be freely interchanged. There are no restrictions on where a transparent type alias can be defined, or which source code can access its underlying implementation.
-   -   
+   -  An alias created using newtype (such as Point above) is an opaque type alias.  Any file that includes this file has no knowledge that a Counter is really an integer, meaning the including file cannot perform any integer-like operations on that type.  newtype Counter as int = int;
+
+Here, we have a class-specific type constant that is an alias, which allows a value of type T2 to be used in any context an arraykey is expected. After all, any int value is also an arraykey value.
+```
+class C {
+  const type T2 as arraykey = int;
+  ...
+}
+```
