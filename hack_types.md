@@ -47,4 +47,44 @@ class C {
 - Although noreturn is not a type, per se, it is regarded as a subtype of all other types, and a supertype of none.
 
 
+7. Certain program elements are capable of changing the type of an expression using what is called type refinement. Consider the following:
+```
+function f1(?int $p): void {
+  //  $x = $p % 3;       // rejected; % not defined for ?int
+  if ($p is int) { // type refinement occurs; $p has type int
+    $x = $p % 3; // accepted; % defined for int
+  }
+}
+```
+An implementation is not required to produce the correct type refinement when using multiple criteria directly.
+```
+function f4(?num $p): void {
+  if (($p is int) || ($p is float)) {
+    //    $x = $p**2;    // rejected
+  }
+}
+```
+Inside the true path of the if statement, even though we know that $this->p1 is an int to begin with, once any method in this class is called, the implementation must assume that method could have caused a type refinement on anything currently in scope. As a result, the second attempt to left shift is rejected.
+
+```
+class C {
+  private ?int $p = 8; // holds an int, but type is ?int
+  public function m(): void {
+    if ($this->p is int) { // type refinement occurs; $this->p1 is int
+      $x = $this->p << 2; // allowed; type is int
+      $this->n(); // could involve a permanent type refinement on $p
+      //      $x = $this->p << 2;   // disallowed; might no longer be int
+    }
+  }
+  public function n(): void { /* ... */ }
+```
+
+8. While certain kinds of variables must have their type declared explicitly, others can have their type inferred by having the implementation look at the context in which those variables are used. 
+```
+$v = 100;
+function is_leap_year(int $yy): bool {   // As we can see, $v is implicitly typed as int, and $yy is explicitly typed.
+```
+- Types must be declared for properties and for the parameters and the return type of named functions.
+- Types can be declared or inferred for constants and for the parameters and return type of unnamed functions.
+
 
