@@ -93,3 +93,51 @@ Namespace HH\Lib\Math contains the following integer-related constants: INT64_MA
 
 
 10. The floating-point type, float, allows the use of real numbers. Using predefined constant names, those values are written as -INF, INF, and NAN (Not-a-Number (NaN)), respectively.
+
+
+11. A shape is a lightweight type with named fields. It's similar to structs or records in other programming languages. Shape fields are accessed with array indexing syntax, similar to dict. Note that field names must be string literals.
+- Shapes are copy-on-write.
+- Normally, the type checker will enforce that you provide exactly the fields specified. This is called a 'closed shape'. Shape types may include ... to indicate that additional fields are permitted. This is called an 'open shape'.
+```
+$my_point = shape('x' => -3, 'y' => 6, 'visible' => true);
+
+$s1 = shape('name' => 'db-01', 'age' => 365);
+$s2 = $s1;
+
+$s2['age'] = 42;
+// $s1['age'] is still 365.
+
+function takes_named(shape('name' => string) $_): void {}
+
+// Type error: unexpected field 'age'.
+takes_named(shape('name' => 'db-01', 'age' => 365));
+
+function takes_named(shape('name' => string, ...) $_): void {}
+
+// OK.
+takes_named(shape('name' => 'db-01', 'age' => 365));
+
+
+// To access the additional fields in an open shape, you can use Shapes::idx.
+
+function takes_named(shape('name' => string, ...) $n): void {
+  // The value in the shape, or null if field is absent.
+  $nullable_age = Shapes::idx($n, 'age');
+
+  // The value in the shape, or 0 if field is absent.
+  $age_with_default = Shapes::idx($n, 'age', 0);
+}
+
+
+function takes_server2(shape('name' => string, 'age' => ?int) $s): void {
+  $age = $s['age'] ?? 0;
+}
+
+function takes_server3(shape('name' => string, ...) $s): void {
+  $age = Shapes::idx($s, 'age', 0) as int;
+}
+
+```
+
+12. The type arraykey can represent any integer or string value.
+13. 
