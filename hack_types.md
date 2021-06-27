@@ -140,4 +140,92 @@ function takes_server3(shape('name' => string, ...) $s): void {
 ```
 
 12. The type arraykey can represent any integer or string value.
-13. 
+13. classname.  f function can be called with the name of the class Employee or any of its subclasses.
+```
+class Employee { ... }
+$emp = new Employee( ... );
+
+class Employee { ... }
+
+function f(classname<Employee> $clsname): void {
+  $w = new $clsname();  // create an object whose type is passed in
+  ...
+}
+
+
+class Intern extends Employee { ... }
+
+f(Employee::class);  // will call: new Employee();
+f(Intern::class);    // will call: new Intern();
+f(Vector::class);    // typechecker error!
+
+```
+At runtime, these are regular strings (SomeClassName::class === 'SomeClassName').
+
+14. You can use null to define a class implementing this interface, making it clear that you don't care about the argument to startAt.
+```
+class TraverseIntsFromStart implements TraverseFrom<int, null> {
+  public function __construct(private vec<int> $items) {}
+
+  public function startAt(null $_): Traversable<int> {
+    return $this->items;
+  }
+}
+```
+
+15. The mixed type represents any value at all in Hack. mixed is equivalent to ?nonnull. 
+We recommend you avoid using mixed whenever you can use a more specific type.
+```
+function takes_anything(mixed $m): void {}
+
+function call_it(): void {
+  takes_anything("foo");
+  takes_anything(42);
+  takes_anything(new MyClass());
+}
+```
+
+16. dynamic.  With dynamic, the presence of dynamism in a function is local to the function, and dynamic behaviors cannot leak into code that does not know about it. dynamic allows calls, property access, and bracket access without a null-check, but it can throw if the runtime value is null.
+
+```
+function f(dynamic $x) : void {
+  $n = $x + 5;            // $n is a num
+  $s = $x . "hello!";     // $s is a string
+  $y = $x->anyMethod();   // $y is dynamic
+}
+```
+
+17. nonretun and nothing
+```
+function i_am_a_noreturn_function(): noreturn {
+  throw new \Exception('stop right here');
+}
+
+function i_return_nothing(): nothing {
+  i_am_a_noreturn_function();
+}
+
+const ?int NULLABLE_INT = 0;
+
+async function main_async(): Awaitable<void> {
+  example_noreturn();
+  example_nothing();
+}
+
+function example_noreturn(): int {
+  $nullable_int = NULLABLE_INT;
+  if ($nullable_int is null) {
+    i_am_a_noreturn_function();
+  }
+  return $nullable_int;
+}
+
+function example_nothing(): int {
+  $nullable_int = NULLABLE_INT;
+  if ($nullable_int is null) {
+    return i_return_nothing();
+  }
+  return $nullable_int;
+}
+
+```
