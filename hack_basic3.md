@@ -14,3 +14,50 @@ $max = 100;
 invariant(!$p is null && $p <= $max, "\$p's value %d must be <= %d", $p, $max);
 
 ```
+
+4. Attributes attach metadata to Hack definitions.
+```
+// Hack provides built-in attributes that can change runtime or typechecker behavior.
+<<__Memoize>>
+function add_one(int $x): int {
+  return $x + 1;
+}
+
+// You can attach multiple attributes to a definition, and attributes can have arguments.
+<<__ConsistentConstruct>>
+class OtherClass {
+  <<__Memoize, __Deprecated("Use FooClass methods instead")>>
+  public function addOne(int $x): int {
+    return $x + 1;
+  }
+}
+
+```
+
+5. Defining an attribute, You can define your own attribute by implementing an attribute interface in the HH namespace.
+```
+class Contributors implements HH\ClassAttribute {
+  public function __construct(private string $author, private ?keyset<string> $maintainers = null) {}
+  public function getAuthor(): string {
+    return $this->author;
+  }
+  public function getMaintainers(): keyset<string> {
+    return $this->maintainers ?? keyset[$this->author];
+  }
+}
+
+<<Contributors("John Doe", keyset["ORM Team", "Core Library Team"])>>
+class MyClass {}
+
+<<Contributors("You")>>
+class YourClass {}
+
+```
+
+6. Accessing attribute arguments: You need to use reflection to access attribute arguments.
+```
+$rc = new ReflectionClass('MyClass');
+$my_class_contributors = $rc->getAttributeClass(Contributors::class);
+$my_class_contributors->getAuthor(); // "John Doe"
+$my_class_contributors->getMaintainers(); // keyset["ORM Team", "Core Library Team"]
+```
